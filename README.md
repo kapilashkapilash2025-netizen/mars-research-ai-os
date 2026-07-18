@@ -1,0 +1,33 @@
+# Mars Research AI OS
+
+An open-source AI operating system for organizing Mars research, scientific data, simulations, mission knowledge, and autonomous research workflows.
+
+## Mission
+
+Build a reliable research platform that helps scientists, engineers, students, and mission teams explore Mars data and turn evidence into useful decisions.
+
+## Initial Goals
+
+- Ingest and organize public Mars mission datasets
+- Search research papers and mission knowledge with citations
+- Run AI-assisted analysis and simulation workflows
+- Support modular research agents and tools
+- Keep scientific claims traceable to their sources
+
+## Proposed Architecture
+
+- `apps/` — user-facing applications and dashboards
+- `core/` — orchestration, models, memory, and shared services
+- `agents/` — specialized research agents
+- `data/` — dataset connectors and schemas
+- `docs/` — architecture, research notes, and project plans
+- `tests/` — automated verification
+
+## Status
+
+Early research and architecture phase. The first milestone is defining a small, testable MVP around Mars knowledge search and cited answers.
+
+## Contributing
+
+Ideas and contributions are welcome. Please open an issue before starting a large change so the design can be discussed first.
+
