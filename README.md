@@ -27,7 +27,18 @@ Build a reliable research platform that helps scientists, engineers, students, a
 
 Early research and architecture phase. The first milestone is defining a small, testable MVP around Mars knowledge search and cited answers.
 
+## Quick Start
+
+The base runtime requires Python 3.11 or newer.
+
+```bash
+python -m pip install -e ".[dev]"
+mars-ai-os health
+python -m pytest
+```
+
+Development is pull-request based. See [CONTRIBUTING.md](CONTRIBUTING.md) before making changes.
+
 ## Contributing
 
 Ideas and contributions are welcome. Please open an issue before starting a large change so the design can be discussed first.
-
