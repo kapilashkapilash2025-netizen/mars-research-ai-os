@@ -48,6 +48,7 @@ mars-ai-os physics-demo
 mars-ai-os hal-demo
 mars-ai-os control-demo
 mars-ai-os degraded-demo
+mars-ai-os recovery-demo
 python -m pytest
 ```
 
