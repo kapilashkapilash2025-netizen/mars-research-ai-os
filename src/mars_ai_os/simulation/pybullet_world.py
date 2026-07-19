@@ -6,6 +6,7 @@ from dataclasses import asdict, dataclass
 from importlib import import_module
 from math import pi
 from pathlib import Path
+from time import sleep
 from typing import Any
 
 from mars_ai_os.navigation.drive import DriveLimits, EightWheelDrive
@@ -22,6 +23,7 @@ class SimulationConfig:
     linear_speed_mps: float = 0.55
     angular_speed_radps: float = 0.10
     gui: bool = False
+    real_time: bool = False
     motor_torque_nm: float = 45.0
 
     def __post_init__(self) -> None:
@@ -192,6 +194,18 @@ class PyBulletMarsWorld:
     def step(self) -> None:
         self.bullet.stepSimulation(physicsClientId=self.client_id)
         self.clock.now += self.config.time_step_s
+        if self.config.real_time:
+            sleep(self.config.time_step_s)
+
+    def follow_camera(self, distance: float, yaw: float, pitch: float) -> None:
+        position, _ = self.pose()
+        self.bullet.resetDebugVisualizerCamera(
+            cameraDistance=distance,
+            cameraYaw=yaw,
+            cameraPitch=pitch,
+            cameraTargetPosition=position,
+            physicsClientId=self.client_id,
+        )
 
     def _joint_indices(self) -> dict[str, int]:
         if self.body_id is None:
@@ -264,6 +278,75 @@ def run_demo(config: SimulationConfig | None = None) -> SimulationResult:
         final_yaw_rad=yaw,
         navigation_healthy=health["healthy"] is True,
     )
+
+
+def run_interactive() -> None:
+    """Run an unlimited, real-time GUI session with live design controls."""
+
+    config = SimulationConfig(gui=True, real_time=True)
+    with PyBulletMarsWorld(config) as world:
+        drive = world.build_drive()
+        drive.start()
+        bullet = world.bullet
+        client = world.client_id
+        speed = bullet.addUserDebugParameter(
+            "Forward / reverse (m/s)", -1.0, 1.0, 0.0, physicsClientId=client
+        )
+        turn = bullet.addUserDebugParameter(
+            "Turn left / right (rad/s)", -0.8, 0.8, 0.0, physicsClientId=client
+        )
+        pause = bullet.addUserDebugParameter(
+            "Pause motors (0=drive, 1=pause)", 0.0, 1.0, 1.0, physicsClientId=client
+        )
+        emergency = bullet.addUserDebugParameter(
+            "EMERGENCY STOP", 0.0, 1.0, 0.0, physicsClientId=client
+        )
+        camera_distance = bullet.addUserDebugParameter(
+            "Camera distance", 3.0, 15.0, 6.0, physicsClientId=client
+        )
+        camera_yaw = bullet.addUserDebugParameter(
+            "Camera yaw", -180.0, 180.0, 45.0, physicsClientId=client
+        )
+        camera_pitch = bullet.addUserDebugParameter(
+            "Camera pitch", -80.0, -10.0, -30.0, physicsClientId=client
+        )
+        bullet.addUserDebugText(
+            "Mars AI OS | adjust sliders to drive and inspect the rover",
+            (0.0, 0.0, 1.2),
+            textColorRGB=(0.9, 0.4, 0.1),
+            textSize=1.3,
+            parentObjectUniqueId=world.body_id,
+            physicsClientId=client,
+        )
+
+        refresh_steps = max(1, round(0.1 / config.time_step_s))
+        step = 0
+        try:
+            while bullet.isConnected(physicsClientId=client):
+                if bullet.readUserDebugParameter(emergency, physicsClientId=client) >= 0.5:
+                    drive.emergency_stop("operator emergency stop")
+                    break
+                is_paused = bullet.readUserDebugParameter(pause, physicsClientId=client) >= 0.5
+                if step % refresh_steps == 0:
+                    linear = 0.0 if is_paused else bullet.readUserDebugParameter(
+                        speed, physicsClientId=client
+                    )
+                    angular = 0.0 if is_paused else bullet.readUserDebugParameter(
+                        turn, physicsClientId=client
+                    )
+                    drive.command_velocity(linear, angular)
+                world.step()
+                drive.tick()
+                world.follow_camera(
+                    bullet.readUserDebugParameter(camera_distance, physicsClientId=client),
+                    bullet.readUserDebugParameter(camera_yaw, physicsClientId=client),
+                    bullet.readUserDebugParameter(camera_pitch, physicsClientId=client),
+                )
+                step += 1
+        except KeyboardInterrupt:
+            drive.emergency_stop("operator interrupted simulation")
+        finally:
+            drive.stop()
 
 
 def _load_pybullet() -> Any:
