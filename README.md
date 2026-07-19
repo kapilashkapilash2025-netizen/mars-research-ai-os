@@ -57,6 +57,7 @@ The base runtime requires Python 3.11 or newer.
 ```bash
 python -m pip install -e ".[dev]"
 mars-ai-os health
+mars-ai-os physics-demo
 python -m pytest
 ```
 

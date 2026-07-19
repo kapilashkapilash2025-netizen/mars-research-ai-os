@@ -52,6 +52,20 @@ class PredictionFinished:
     snapshots: int
 
 
+@dataclass(frozen=True, slots=True)
+class PhysicsPredictionCompleted:
+    timestamp_s: float
+    source_snapshot_id: str
+    predicted_snapshot_id: str
+    fingerprint: str
+    horizon_s: float
+    timestep_s: float
+    configuration_hash: str
+    warnings: tuple[str, ...]
+    assumptions: tuple[str, ...]
+    model_version: str
+
+
 Event = (
     SnapshotCreated
     | BatteryChanged
@@ -60,6 +74,7 @@ Event = (
     | FaultDetected
     | TemperatureWarning
     | PredictionFinished
+    | PhysicsPredictionCompleted
 )
 E = TypeVar("E", bound=Event)
 
@@ -74,4 +89,3 @@ class EventBus:
     def publish(self, event: Event) -> None:
         for callback in tuple(self._subscribers[type(event)]):
             callback(event)
-
