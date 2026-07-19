@@ -51,6 +51,7 @@ mars-ai-os degraded-demo
 mars-ai-os recovery-demo
 mars-ai-os twin-acceptance-demo
 mars-ai-os navigation-demo
+mars-ai-os navigation-execution-demo
 python -m pytest
 ```
 
