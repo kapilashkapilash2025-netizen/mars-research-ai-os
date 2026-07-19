@@ -21,6 +21,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     subparsers.add_parser("physics-demo", help="Run a deterministic Mars physics prediction")
     subparsers.add_parser("hal-demo", help="Run deterministic in-memory rover HAL demonstration")
+    subparsers.add_parser(
+        "control-demo", help="Run reviewed eight-wheel safety-control demonstration"
+    )
     return parser
 
 
@@ -66,7 +69,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
     if args.command == "hal-demo":
         from mars_ai_os.hal.demo import run_hal_demo
+
         print(json.dumps(run_hal_demo(), indent=2, sort_keys=True))
+        return 0
+    if args.command == "control-demo":
+        from mars_ai_os.control.demo import run_control_demo
+
+        print(json.dumps(run_control_demo(), indent=2, sort_keys=True))
         return 0
     return 2
 

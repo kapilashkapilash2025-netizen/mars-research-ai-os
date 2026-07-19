@@ -46,6 +46,7 @@ python -m pip install -e ".[dev]"
 mars-ai-os health
 mars-ai-os physics-demo
 mars-ai-os hal-demo
+mars-ai-os control-demo
 python -m pytest
 ```
 
