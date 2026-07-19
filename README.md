@@ -27,6 +27,10 @@ Build a reliable research platform that helps scientists, engineers, students, a
 
 Early research and architecture phase. The first milestone is defining a small, testable MVP around Mars knowledge search and cited answers.
 
+The project is governed as a long-term scientific research platform. See [docs/PROJECT_CHARTER.md](docs/PROJECT_CHARTER.md).
+
+The classical [Quantum-Inspired Planetary Intelligence Engine](docs/QUANTUM_INSPIRED_ENGINE.md) provides reproducible QUBO and simulated-annealing foundations for advisory mission decisions without requiring quantum hardware.
+
 ## Quick Start
 
 The base runtime requires Python 3.11 or newer.

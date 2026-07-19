@@ -13,6 +13,8 @@ All development is handled through pull requests.
 
 Do not commit secrets, private datasets, model weights, or generated research artifacts.
 
+Architectural changes must follow [docs/PROJECT_CHARTER.md](docs/PROJECT_CHARTER.md). Research and optimization changes must record assumptions, references, configuration, reproducibility information, safety boundaries, and scientific provenance.
+
 ## Local checks
 
 ```bash
