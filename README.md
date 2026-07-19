@@ -52,6 +52,8 @@ Keep the simulator open and design with live driving/camera controls:
 mars-ai-os simulate --interactive
 ```
 
+Interactive mode also renders the rover-to-orbiter-to-Earth DTN network with configurable delay, packet loss, contact status, queue depth, and delivered bundles. See [docs/COMMUNICATIONS.md](docs/COMMUNICATIONS.md).
+
 See [docs/SIMULATION.md](docs/SIMULATION.md) for headless runs and model scope.
 
 Development is pull-request based. See [CONTRIBUTING.md](CONTRIBUTING.md) before making changes.
