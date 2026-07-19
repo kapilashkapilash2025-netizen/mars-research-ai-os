@@ -19,6 +19,7 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser(
         "twin-demo", help="Demonstrate snapshots, diffs, prediction, events, and replay"
     )
+    subparsers.add_parser("physics-demo", help="Run a deterministic Mars physics prediction")
     return parser
 
 
@@ -57,9 +58,13 @@ def main(argv: Sequence[str] | None = None) -> int:
 
         print(json.dumps(run_twin_demo(), indent=2, sort_keys=True))
         return 0
+    if args.command == "physics-demo":
+        from mars_ai_os.mars_physics.demo import run_physics_demo
+
+        print(json.dumps(run_physics_demo(), indent=2, sort_keys=True))
+        return 0
     return 2
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
