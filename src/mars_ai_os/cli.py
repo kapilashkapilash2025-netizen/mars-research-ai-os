@@ -24,6 +24,7 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser(
         "control-demo", help="Run reviewed eight-wheel safety-control demonstration"
     )
+    subparsers.add_parser("degraded-demo", help="Run degraded-mobility safety demonstration")
     return parser
 
 
@@ -76,6 +77,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         from mars_ai_os.control.demo import run_control_demo
 
         print(json.dumps(run_control_demo(), indent=2, sort_keys=True))
+        return 0
+    if args.command == "degraded-demo":
+        from mars_ai_os.degraded.demo import run_degraded_demo
+
+        print(json.dumps(run_degraded_demo(), indent=2, sort_keys=True))
         return 0
     return 2
 
