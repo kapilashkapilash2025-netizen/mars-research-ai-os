@@ -23,6 +23,8 @@ Build a reliable research platform that helps scientists, engineers, students, a
 - `docs/` — architecture, research notes, and project plans
 - `tests/` — automated verification
 
+The base platform also includes a hardware-neutral, safety-oriented eight-wheel BLDC navigation module. See [docs/NAVIGATION.md](docs/NAVIGATION.md).
+
 ## Status
 
 Early research and architecture phase. The first milestone is defining a small, testable MVP around Mars knowledge search and cited answers.
@@ -36,6 +38,21 @@ python -m pip install -e ".[dev]"
 mars-ai-os health
 python -m pytest
 ```
+
+Run the optional eight-wheel Mars physics prototype:
+
+```bash
+python -m pip install -e ".[simulation]"
+mars-ai-os simulate --duration 6 --gui
+```
+
+Keep the simulator open and design with live driving/camera controls:
+
+```bash
+mars-ai-os simulate --interactive
+```
+
+See [docs/SIMULATION.md](docs/SIMULATION.md) for headless runs and model scope.
 
 Development is pull-request based. See [CONTRIBUTING.md](CONTRIBUTING.md) before making changes.
 
