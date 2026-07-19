@@ -29,6 +29,9 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser(
         "twin-acceptance-demo", help="Run Twin candidate acceptance demonstration"
     )
+    subparsers.add_parser(
+        "navigation-demo", help="Run deterministic navigation intent demonstration"
+    )
     return parser
 
 
@@ -96,6 +99,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         from mars_ai_os.twin_acceptance.demo import run_twin_acceptance_demo
 
         print(json.dumps(run_twin_acceptance_demo(), indent=2, sort_keys=True))
+        return 0
+    if args.command == "navigation-demo":
+        from mars_ai_os.navigation.demo import run_navigation_demo
+
+        print(json.dumps(run_navigation_demo(), indent=2, sort_keys=True))
         return 0
     return 2
 
