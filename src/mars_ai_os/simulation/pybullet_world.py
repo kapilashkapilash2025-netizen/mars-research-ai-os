@@ -285,6 +285,8 @@ def run_interactive() -> None:
 
     config = SimulationConfig(gui=True, real_time=True)
     with PyBulletMarsWorld(config) as world:
+        from mars_ai_os.simulation.communication_overlay import CommunicationOverlay
+
         drive = world.build_drive()
         drive.start()
         bullet = world.bullet
@@ -318,6 +320,7 @@ def run_interactive() -> None:
             parentObjectUniqueId=world.body_id,
             physicsClientId=client,
         )
+        communications = CommunicationOverlay(bullet, client)
 
         refresh_steps = max(1, round(0.1 / config.time_step_s))
         step = 0
@@ -337,6 +340,7 @@ def run_interactive() -> None:
                     drive.command_velocity(linear, angular)
                 world.step()
                 drive.tick()
+                communications.step(config.time_step_s)
                 world.follow_camera(
                     bullet.readUserDebugParameter(camera_distance, physicsClientId=client),
                     bullet.readUserDebugParameter(camera_yaw, physicsClientId=client),

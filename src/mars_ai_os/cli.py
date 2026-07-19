@@ -24,6 +24,11 @@ def build_parser() -> argparse.ArgumentParser:
     simulate.add_argument(
         "--real-time", action="store_true", help="Pace a timed GUI run at wall-clock speed"
     )
+    communicate = subparsers.add_parser(
+        "communicate", help="Run a headless Mars-to-Earth DTN scenario"
+    )
+    communicate.add_argument("--duration", type=float, default=3_600.0)
+    communicate.add_argument("--step", type=float, default=1.0)
     return parser
 
 
@@ -50,6 +55,17 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
         print(json.dumps(result.to_dict(), indent=2, sort_keys=True))
         return 0 if result.navigation_healthy else 1
+    if args.command == "communicate":
+        from mars_ai_os.communications import BundlePriority, MarsEarthNetwork
+
+        network = MarsEarthNetwork()
+        network.submit("rover/health", 8_192, BundlePriority.HEALTH)
+        network.submit("science/image", 5_000_000, BundlePriority.SCIENCE)
+        steps = round(args.duration / args.step)
+        for _ in range(steps):
+            network.step(args.step)
+        print(json.dumps(network.summary(), indent=2, sort_keys=True))
+        return 0
     return 2
 
 
