@@ -31,6 +31,8 @@ The project is governed as a long-term scientific research platform. See [docs/P
 
 The classical [Quantum-Inspired Planetary Intelligence Engine](docs/QUANTUM_INSPIRED_ENGINE.md) provides reproducible QUBO and simulated-annealing foundations for advisory mission decisions without requiring quantum hardware.
 
+The [Predictive Digital Twin Engine](docs/PREDICTIVE_DIGITAL_TWIN.md) is the canonical information-only rover state for future subsystems. It provides immutable snapshots, deterministic diffs, replay, event publication, and bounded assumption-explicit prediction.
+
 ## Quick Start
 
 The base runtime requires Python 3.11 or newer.

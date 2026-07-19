@@ -16,6 +16,9 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser(
         "optimize-demo", help="Run a deterministic quantum-inspired mission selection demo"
     )
+    subparsers.add_parser(
+        "twin-demo", help="Demonstrate snapshots, diffs, prediction, events, and replay"
+    )
     return parser
 
 
@@ -48,6 +51,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         history = output.pop("best_energy_history")
         output["history_points"] = len(history)
         print(json.dumps(output, indent=2, sort_keys=True))
+        return 0
+    if args.command == "twin-demo":
+        from mars_ai_os.digital_twin.demo import run_twin_demo
+
+        print(json.dumps(run_twin_demo(), indent=2, sort_keys=True))
         return 0
     return 2
 
