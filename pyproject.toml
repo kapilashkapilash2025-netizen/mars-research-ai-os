@@ -17,6 +17,7 @@ dev = [
   "ruff>=0.6",
 ]
 simulation = [
+  "numpy>=1.26,<3",
   "pybullet>=3.2.7",
 ]
 
