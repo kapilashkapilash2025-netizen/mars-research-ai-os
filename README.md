@@ -23,6 +23,8 @@ Build a reliable research platform that helps scientists, engineers, students, a
 - `docs/` — architecture, research notes, and project plans
 - `tests/` — automated verification
 
+The base platform also includes a hardware-neutral, safety-oriented eight-wheel BLDC navigation module. See [docs/NAVIGATION.md](docs/NAVIGATION.md).
+
 ## Status
 
 Early research and architecture phase. The first milestone is defining a small, testable MVP around Mars knowledge search and cited answers.
