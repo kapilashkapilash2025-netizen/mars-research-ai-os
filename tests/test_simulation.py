@@ -36,3 +36,9 @@ def test_headless_demo_moves_and_stays_healthy() -> None:
     assert result.steps == 180
     assert result.distance_m > 0.05
     assert result.navigation_healthy is True
+
+
+def test_headless_config_remains_unpaced() -> None:
+    config = SimulationConfig(gui=False)
+
+    assert config.real_time is False

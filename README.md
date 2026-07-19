@@ -46,6 +46,12 @@ python -m pip install -e ".[simulation]"
 mars-ai-os simulate --duration 6 --gui
 ```
 
+Keep the simulator open and design with live driving/camera controls:
+
+```bash
+mars-ai-os simulate --interactive
+```
+
 See [docs/SIMULATION.md](docs/SIMULATION.md) for headless runs and model scope.
 
 Development is pull-request based. See [CONTRIBUTING.md](CONTRIBUTING.md) before making changes.
