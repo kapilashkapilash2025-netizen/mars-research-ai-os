@@ -33,6 +33,10 @@ The classical [Quantum-Inspired Planetary Intelligence Engine](docs/QUANTUM_INSP
 
 The [Predictive Digital Twin Engine](docs/PREDICTIVE_DIGITAL_TWIN.md) is the canonical information-only rover state for future subsystems. It provides immutable snapshots, deterministic diffs, replay, event publication, and bounded assumption-explicit prediction.
 
+The [Mars Physics and Environment Engine](docs/MARS_PHYSICS_ENGINE.md) provides deterministic,
+backend-neutral candidate predictions for simulation review. Its lightweight models are not calibrated
+for hardware and expose no actuation interface.
+
 ## Quick Start
 
 The base runtime requires Python 3.11 or newer.
@@ -40,6 +44,7 @@ The base runtime requires Python 3.11 or newer.
 ```bash
 python -m pip install -e ".[dev]"
 mars-ai-os health
+mars-ai-os physics-demo
 python -m pytest
 ```
 
