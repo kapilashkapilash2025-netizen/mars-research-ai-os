@@ -49,6 +49,7 @@ mars-ai-os hal-demo
 mars-ai-os control-demo
 mars-ai-os degraded-demo
 mars-ai-os recovery-demo
+mars-ai-os twin-acceptance-demo
 python -m pytest
 ```
 
