@@ -35,6 +35,9 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser(
         "navigation-execution-demo", help="Run reviewed navigation execution demonstration"
     )
+    subparsers.add_parser(
+        "mission-motion-adapter-demo", help="Run reviewed mission-motion adapter demonstration"
+    )
     return parser
 
 
@@ -112,6 +115,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         from mars_ai_os.navigation_execution.demo import run_navigation_execution_demo
 
         print(json.dumps(run_navigation_execution_demo(), indent=2, sort_keys=True))
+        return 0
+    if args.command == "mission-motion-adapter-demo":
+        from mars_ai_os.mission_motion_adapter.demo import run_mission_motion_adapter_demo
+
+        print(json.dumps(run_mission_motion_adapter_demo(), indent=2, sort_keys=True))
         return 0
     return 2
 

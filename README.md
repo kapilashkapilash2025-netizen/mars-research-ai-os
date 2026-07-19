@@ -52,6 +52,7 @@ mars-ai-os recovery-demo
 mars-ai-os twin-acceptance-demo
 mars-ai-os navigation-demo
 mars-ai-os navigation-execution-demo
+mars-ai-os mission-motion-adapter-demo
 python -m pytest
 ```
 
