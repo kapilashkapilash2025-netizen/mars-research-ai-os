@@ -39,6 +39,15 @@ mars-ai-os health
 python -m pytest
 ```
 
+Run the optional eight-wheel Mars physics prototype:
+
+```bash
+python -m pip install -e ".[simulation]"
+mars-ai-os simulate --duration 6 --gui
+```
+
+See [docs/SIMULATION.md](docs/SIMULATION.md) for headless runs and model scope.
+
 Development is pull-request based. See [CONTRIBUTING.md](CONTRIBUTING.md) before making changes.
 
 ## Contributing

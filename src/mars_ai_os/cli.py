@@ -13,6 +13,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="mars-ai-os")
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("health", help="Print a base-kernel health report")
+    simulate = subparsers.add_parser("simulate", help="Run the eight-wheel PyBullet prototype")
+    simulate.add_argument("--duration", type=float, default=6.0, help="Simulation seconds")
+    simulate.add_argument("--gui", action="store_true", help="Open the PyBullet GUI")
     return parser
 
 
@@ -24,6 +27,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(json.dumps(kernel.health(), indent=2, sort_keys=True))
         kernel.stop()
         return 0
+    if args.command == "simulate":
+        from mars_ai_os.simulation import SimulationConfig, run_demo
+
+        result = run_demo(SimulationConfig(duration_s=args.duration, gui=args.gui))
+        print(json.dumps(result.to_dict(), indent=2, sort_keys=True))
+        return 0 if result.navigation_healthy else 1
     return 2
 
 

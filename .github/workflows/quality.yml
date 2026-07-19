@@ -18,7 +18,7 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: python -m pip install --upgrade pip
-      - run: python -m pip install -e ".[dev]"
+      - run: python -m pip install -e ".[dev,simulation]"
       - run: python -m ruff check .
       - run: python -m pytest
 

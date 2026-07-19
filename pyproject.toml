@@ -16,6 +16,10 @@ dev = [
   "pytest>=8.2",
   "ruff>=0.6",
 ]
+simulation = [
+  "numpy>=1.26,<3",
+  "pybullet>=3.2.7",
+]
 
 [project.scripts]
 mars-ai-os = "mars_ai_os.cli:main"

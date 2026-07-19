@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot name="mars_rover_8wd">
+  <material name="mars_white"><color rgba="0.78 0.80 0.82 1"/></material>
+  <material name="wheel_black"><color rgba="0.07 0.07 0.07 1"/></material>
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="80"/>
+      <inertia ixx="9.08" ixy="0" ixz="0" iyy="22.42" iyz="0" izz="28.73"/>
+    </inertial>
+    <visual>
+      <geometry><box size="1.8 1.1 0.35"/></geometry>
+      <material name="mars_white"/>
+    </visual>
+    <collision><geometry><box size="1.8 1.1 0.35"/></geometry></collision>
+  </link>
+
+  <!-- Each wheel uses the same physical properties; joint names are the software contract. -->
+  <link name="left_front_wheel"><inertial><mass value="4"/><inertia ixx="0.10" ixy="0" ixz="0" iyy="0.19" iyz="0" izz="0.10"/></inertial><visual><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry><material name="wheel_black"/></visual><collision><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry></collision></link>
+  <joint name="left_front_joint" type="continuous"><parent link="base_link"/><child link="left_front_wheel"/><origin xyz="0.68 0.62 -0.20"/><axis xyz="0 1 0"/><dynamics damping="0.1" friction="0.02"/></joint>
+
+  <link name="left_mid_front_wheel"><inertial><mass value="4"/><inertia ixx="0.10" ixy="0" ixz="0" iyy="0.19" iyz="0" izz="0.10"/></inertial><visual><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry><material name="wheel_black"/></visual><collision><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry></collision></link>
+  <joint name="left_mid_front_joint" type="continuous"><parent link="base_link"/><child link="left_mid_front_wheel"/><origin xyz="0.23 0.62 -0.20"/><axis xyz="0 1 0"/><dynamics damping="0.1" friction="0.02"/></joint>
+
+  <link name="left_mid_rear_wheel"><inertial><mass value="4"/><inertia ixx="0.10" ixy="0" ixz="0" iyy="0.19" iyz="0" izz="0.10"/></inertial><visual><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry><material name="wheel_black"/></visual><collision><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry></collision></link>
+  <joint name="left_mid_rear_joint" type="continuous"><parent link="base_link"/><child link="left_mid_rear_wheel"/><origin xyz="-0.23 0.62 -0.20"/><axis xyz="0 1 0"/><dynamics damping="0.1" friction="0.02"/></joint>
+
+  <link name="left_rear_wheel"><inertial><mass value="4"/><inertia ixx="0.10" ixy="0" ixz="0" iyy="0.19" iyz="0" izz="0.10"/></inertial><visual><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry><material name="wheel_black"/></visual><collision><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry></collision></link>
+  <joint name="left_rear_joint" type="continuous"><parent link="base_link"/><child link="left_rear_wheel"/><origin xyz="-0.68 0.62 -0.20"/><axis xyz="0 1 0"/><dynamics damping="0.1" friction="0.02"/></joint>
+
+  <link name="right_front_wheel"><inertial><mass value="4"/><inertia ixx="0.10" ixy="0" ixz="0" iyy="0.19" iyz="0" izz="0.10"/></inertial><visual><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry><material name="wheel_black"/></visual><collision><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry></collision></link>
+  <joint name="right_front_joint" type="continuous"><parent link="base_link"/><child link="right_front_wheel"/><origin xyz="0.68 -0.62 -0.20"/><axis xyz="0 1 0"/><dynamics damping="0.1" friction="0.02"/></joint>
+
+  <link name="right_mid_front_wheel"><inertial><mass value="4"/><inertia ixx="0.10" ixy="0" ixz="0" iyy="0.19" iyz="0" izz="0.10"/></inertial><visual><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry><material name="wheel_black"/></visual><collision><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry></collision></link>
+  <joint name="right_mid_front_joint" type="continuous"><parent link="base_link"/><child link="right_mid_front_wheel"/><origin xyz="0.23 -0.62 -0.20"/><axis xyz="0 1 0"/><dynamics damping="0.1" friction="0.02"/></joint>
+
+  <link name="right_mid_rear_wheel"><inertial><mass value="4"/><inertia ixx="0.10" ixy="0" ixz="0" iyy="0.19" iyz="0" izz="0.10"/></inertial><visual><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry><material name="wheel_black"/></visual><collision><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry></collision></link>
+  <joint name="right_mid_rear_joint" type="continuous"><parent link="base_link"/><child link="right_mid_rear_wheel"/><origin xyz="-0.23 -0.62 -0.20"/><axis xyz="0 1 0"/><dynamics damping="0.1" friction="0.02"/></joint>
+
+  <link name="right_rear_wheel"><inertial><mass value="4"/><inertia ixx="0.10" ixy="0" ixz="0" iyy="0.19" iyz="0" izz="0.10"/></inertial><visual><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry><material name="wheel_black"/></visual><collision><origin rpy="1.5708 0 0"/><geometry><cylinder radius="0.25" length="0.14"/></geometry></collision></link>
+  <joint name="right_rear_joint" type="continuous"><parent link="base_link"/><child link="right_rear_wheel"/><origin xyz="-0.68 -0.62 -0.20"/><axis xyz="0 1 0"/><dynamics damping="0.1" friction="0.02"/></joint>
+</robot>
+
