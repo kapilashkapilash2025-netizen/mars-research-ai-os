@@ -1,0 +1,7 @@
+[Unit]
+Description=Mars Research AI OS runtime target
+Requires=audit-service.service digital-twin-service.service safety-service.service
+After=network-online.target
+
+[Install]
+WantedBy=multi-user.target
