@@ -7,9 +7,11 @@ classical baseline that requires no external service, GPU, or trained
 weights, with a clear extension point for stronger backends later.
 
 To upgrade retrieval quality, implement the ``Embedder`` protocol with
-a real model (for example, an Ollama-served embedding model such as
-``nomic-embed-text``) and pass it to ``InMemoryVectorStore``. No other
-code needs to change.
+a real model. ``ollama_embedding.OllamaEmbedder`` does exactly this —
+an Ollama-served embedding model such as ``nomic-embed-text`` — kept in
+its own module since, unlike this one, it makes a real network call.
+Pass any ``Embedder`` to ``InMemoryVectorStore`` or
+``KnowledgeService(embedder=...)``; no other code needs to change.
 """
 
 from __future__ import annotations
@@ -64,9 +66,22 @@ class HashingEmbedder:
 
 
 def cosine_similarity(left: tuple[float, ...], right: tuple[float, ...]) -> float:
+    """True cosine similarity: dot product normalized by both vector norms.
+
+    Does not assume its inputs are already unit-normalized. HashingEmbedder
+    happens to return unit vectors (so this reduces to a plain dot product
+    for it), but real model-backed embedders (e.g. OllamaEmbedder) are not
+    guaranteed to — normalizing here, not in each Embedder, keeps ranking
+    correct regardless of which embedder is configured.
+    """
+
     if len(left) != len(right):
         raise ValueError("Vectors must share the same dimensionality")
     dot = sum(a * b for a, b in zip(left, right, strict=True))
-    # Vectors from HashingEmbedder.embed are already unit-normalized;
-    # clamp for float drift so callers always see a value within [-1, 1].
-    return max(-1.0, min(1.0, dot))
+    left_norm = math.sqrt(sum(component * component for component in left))
+    right_norm = math.sqrt(sum(component * component for component in right))
+    if left_norm == 0.0 or right_norm == 0.0:
+        return 0.0
+    similarity = dot / (left_norm * right_norm)
+    # Clamp for float drift so callers always see a value within [-1, 1].
+    return max(-1.0, min(1.0, similarity))
