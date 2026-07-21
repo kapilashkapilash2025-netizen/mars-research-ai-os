@@ -54,6 +54,7 @@ mars-ai-os navigation-demo
 mars-ai-os navigation-execution-demo
 mars-ai-os mission-motion-adapter-demo
 mars-ai-os boot-demo
+mars-ai-os update-demo
 python -m pytest
 ```
 

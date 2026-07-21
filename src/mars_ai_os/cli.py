@@ -39,6 +39,9 @@ def build_parser() -> argparse.ArgumentParser:
         "mission-motion-adapter-demo", help="Run reviewed mission-motion adapter demonstration"
     )
     subparsers.add_parser("boot-demo", help="Run deterministic AI OS boot-runtime demonstration")
+    subparsers.add_parser(
+        "update-demo", help="Run deterministic secure-update contract demonstration"
+    )
     return parser
 
 
@@ -126,6 +129,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         from mars_ai_os.runtime.demo import run_boot_demo
 
         print(json.dumps(run_boot_demo(), indent=2, sort_keys=True))
+        return 0
+    if args.command == "update-demo":
+        from mars_ai_os.update_runtime.demo import run_update_demo
+
+        print(json.dumps(run_update_demo(), indent=2, sort_keys=True))
         return 0
     return 2
 
