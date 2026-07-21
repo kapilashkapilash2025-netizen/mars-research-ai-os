@@ -7,7 +7,7 @@ from dataclasses import dataclass, field
 from mars_ai_os.knowledge.answering import Answerer, ExtractiveAnswerer
 from mars_ai_os.knowledge.embedding import Embedder, HashingEmbedder
 from mars_ai_os.knowledge.ingestion import SourceConnector
-from mars_ai_os.knowledge.models import Answer
+from mars_ai_os.knowledge.models import Answer, RetrievedPassage
 from mars_ai_os.knowledge.store import InMemoryVectorStore
 
 
@@ -54,11 +54,14 @@ class KnowledgeService:
             "chunks": self._store.chunk_count,
         }
 
-    def ask(self, question: str, *, top_k: int | None = None) -> Answer:
+    def retrieve(self, question: str, *, top_k: int | None = None) -> tuple[RetrievedPassage, ...]:
         if not self._started:
-            raise RuntimeError("KnowledgeService must be started before it can answer questions")
+            raise RuntimeError("KnowledgeService must be started before it can retrieve passages")
         if not question.strip():
             raise ValueError("question cannot be empty")
 
-        passages = self._store.query(question, top_k=top_k or self.top_k)
+        return self._store.query(question, top_k=top_k or self.top_k)
+
+    def ask(self, question: str, *, top_k: int | None = None) -> Answer:
+        passages = self.retrieve(question, top_k=top_k)
         return self.answerer.answer(question, passages)

@@ -197,7 +197,7 @@ class TestKnowledgeDemo:
         result = run_knowledge_demo()
 
         assert result["citations"]
-        assert result["corpus"]["documents"] == 2
+        assert result["corpus"]["documents"] == 5
         assert 0.0 <= result["confidence"] <= 1.0
 
 
