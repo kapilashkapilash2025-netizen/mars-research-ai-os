@@ -76,6 +76,13 @@ class TestEmbedding:
         with pytest.raises(ValueError, match="dimensionality"):
             cosine_similarity((1.0, 0.0), (1.0, 0.0, 0.0))
 
+    def test_cosine_similarity_normalizes_non_unit_vectors(self) -> None:
+        assert cosine_similarity((2.0, 0.0), (10.0, 0.0)) == pytest.approx(1.0)
+        assert cosine_similarity((3.0, 4.0), (30.0, 40.0)) == pytest.approx(1.0)
+
+    def test_cosine_similarity_zero_vector_returns_zero(self) -> None:
+        assert cosine_similarity((0.0, 0.0), (1.0, 1.0)) == 0.0
+
 
 class TestChunking:
     def test_chunk_document_splits_on_sentence_boundaries(self) -> None:
