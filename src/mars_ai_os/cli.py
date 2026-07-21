@@ -19,6 +19,14 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser(
         "twin-demo", help="Demonstrate snapshots, diffs, prediction, events, and replay"
     )
+    knowledge_parser = subparsers.add_parser(
+        "knowledge-demo", help="Ask a cited question against a bundled sample Mars corpus"
+    )
+    knowledge_parser.add_argument(
+        "--question",
+        default="What is Mars atmosphere made of?",
+        help="Question to ask the knowledge engine",
+    )
     return parser
 
 
@@ -56,6 +64,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         from mars_ai_os.digital_twin.demo import run_twin_demo
 
         print(json.dumps(run_twin_demo(), indent=2, sort_keys=True))
+        return 0
+    if args.command == "knowledge-demo":
+        from mars_ai_os.knowledge.demo import run_knowledge_demo
+
+        print(json.dumps(run_knowledge_demo(args.question), indent=2, sort_keys=True))
         return 0
     return 2
 
