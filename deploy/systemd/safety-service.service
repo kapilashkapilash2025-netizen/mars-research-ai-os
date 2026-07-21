@@ -1,0 +1,11 @@
+[Unit]
+Description=Mars AI OS safety supervisor
+After=digital-twin-service.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/mars-ai-os health
+RemainAfterExit=yes
+
+[Install]
+WantedBy=mars-ai-os.target
