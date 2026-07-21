@@ -27,6 +27,9 @@ def build_parser() -> argparse.ArgumentParser:
         default="What is Mars atmosphere made of?",
         help="Question to ask the knowledge engine",
     )
+    subparsers.add_parser(
+        "knowledge-eval", help="Score retrieval quality against the bundled labeled questions"
+    )
     return parser
 
 
@@ -70,9 +73,14 @@ def main(argv: Sequence[str] | None = None) -> int:
 
         print(json.dumps(run_knowledge_demo(args.question), indent=2, sort_keys=True))
         return 0
+    if args.command == "knowledge-eval":
+        from mars_ai_os.knowledge.demo import run_knowledge_evaluation
+
+        report = run_knowledge_evaluation()
+        print(json.dumps(report.to_dict(), indent=2, sort_keys=True))
+        return 0
     return 2
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

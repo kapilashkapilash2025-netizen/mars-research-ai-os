@@ -8,6 +8,12 @@ available. See docs/KNOWLEDGE_ENGINE.md for the design rationale.
 
 from mars_ai_os.knowledge.answering import Answerer, ExtractiveAnswerer
 from mars_ai_os.knowledge.embedding import Embedder, HashingEmbedder
+from mars_ai_os.knowledge.evaluation import (
+    EvaluationCase,
+    EvaluationOutcome,
+    EvaluationReport,
+    run_evaluation,
+)
 from mars_ai_os.knowledge.ingestion import (
     LocalCorpusConnector,
     SourceConnector,
@@ -24,6 +30,9 @@ __all__ = [
     "Citation",
     "Document",
     "Embedder",
+    "EvaluationCase",
+    "EvaluationOutcome",
+    "EvaluationReport",
     "ExtractiveAnswerer",
     "HashingEmbedder",
     "InMemoryVectorStore",
@@ -32,4 +41,5 @@ __all__ = [
     "RetrievedPassage",
     "SourceConnector",
     "StaticDocumentConnector",
+    "run_evaluation",
 ]
