@@ -1,0 +1,1 @@
+{"base_os":"debian-minimal-contract/1","architecture":"x86_64","reproducibility":"seeded manifest; package versions must be pinned","update":"A/B slots with health-confirm rollback"}
