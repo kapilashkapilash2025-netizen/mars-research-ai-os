@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "questions": [
+    {
+      "case_id": "perseverance-landing-date",
+      "question": "When did Perseverance land in Jezero Crater?",
+      "relevant_source_uris": [
+        "https://science.nasa.gov/mission/mars-2020-perseverance/"
+      ],
+      "expected_answer_terms": ["2021", "february"]
+    },
+    {
+      "case_id": "jezero-ancient-environment",
+      "question": "What ancient environment existed in Jezero Crater?",
+      "relevant_source_uris": [
+        "https://science.nasa.gov/mission/mars-2020-perseverance/"
+      ],
+      "expected_answer_terms": ["delta", "river"]
+    },
+    {
+      "case_id": "mars-atmosphere-composition",
+      "question": "What is the atmosphere of Mars mostly made of?",
+      "relevant_source_uris": ["https://science.nasa.gov/mars/facts/"],
+      "expected_answer_terms": ["carbon", "dioxide"]
+    },
+    {
+      "case_id": "unsupported-life-claim",
+      "question": "Which living animal species has NASA confirmed on Mars?",
+      "relevant_source_uris": [],
+      "expected_answer_terms": [],
+      "expect_answer": false
+    }
+  ]
+}
