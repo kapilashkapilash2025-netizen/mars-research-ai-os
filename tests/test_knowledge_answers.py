@@ -6,13 +6,13 @@ import pytest
 
 from mars_ai_os.knowledge import (
     AnswerClaim,
-    Citation,
     CitedAnswer,
     ClaimKind,
     DocumentRecord,
     IngestedDocument,
     KnowledgeAnswerService,
     KnowledgeSearchIndex,
+    NumberedCitation,
     SourceKind,
     SourceRecord,
 )
@@ -79,7 +79,7 @@ def test_claim_contract_separates_evidence_from_inference() -> None:
 
 def test_answer_rejects_missing_or_disordered_citations() -> None:
     result = index().search("Jezero", limit=1)[0]
-    citation = Citation(1, result.passage.source, result.evidence)
+    citation = NumberedCitation(1, result.passage.source, result.evidence)
     claim = AnswerClaim("Supported", ClaimKind.EVIDENCE, (1,))
 
     with pytest.raises(ValueError, match="not present"):

@@ -7,6 +7,9 @@ from mars_ai_os.knowledge.answers import (
     ClaimKind,
     KnowledgeAnswerService,
 )
+from mars_ai_os.knowledge.answers import (
+    Citation as NumberedCitation,
+)
 from mars_ai_os.knowledge.embedding import Embedder, HashingEmbedder
 from mars_ai_os.knowledge.evaluation import (
     EvaluationCase,
@@ -71,6 +74,7 @@ __all__ = [
     "KnowledgeService",
     "LocalCorpusConnector",
     "NasaDocumentIngestor",
+    "NumberedCitation",
     "ProvenanceEvaluationCase",
     "ProvenanceEvaluationReport",
     "RetrievedPassage",
