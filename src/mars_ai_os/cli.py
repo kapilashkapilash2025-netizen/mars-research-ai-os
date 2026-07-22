@@ -30,6 +30,10 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser(
         "knowledge-eval", help="Score retrieval quality against the bundled labeled questions"
     )
+    subparsers.add_parser("physics-demo", help="Run a deterministic Mars physics prediction")
+    subparsers.add_parser(
+        "navigation-demo", help="Run deterministic navigation intent demonstration"
+    )
     return parser
 
 
@@ -78,6 +82,16 @@ def main(argv: Sequence[str] | None = None) -> int:
 
         report = run_knowledge_evaluation()
         print(json.dumps(report.to_dict(), indent=2, sort_keys=True))
+        return 0
+    if args.command == "physics-demo":
+        from mars_ai_os.mars_physics.demo import run_physics_demo
+
+        print(json.dumps(run_physics_demo(), indent=2, sort_keys=True))
+        return 0
+    if args.command == "navigation-demo":
+        from mars_ai_os.navigation.demo import run_navigation_demo
+
+        print(json.dumps(run_navigation_demo(), indent=2, sort_keys=True))
         return 0
     return 2
 

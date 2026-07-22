@@ -1,5 +1,15 @@
 # Mars Research AI OS
 
+An **Areograph Labs** open research platform. Our working mission is to make planetary intelligence
+verifiable. See [docs/BRAND_IDENTITY.md](docs/BRAND_IDENTITY.md).
+
+The Python-backed deterministic Mission Control architecture, API, scoring, safety boundaries, and
+deployment model are documented in
+[docs/VERIFIABLE_MISSION_TWIN.md](docs/VERIFIABLE_MISSION_TWIN.md).
+
+The provenance-first, deterministic AI/ML dataset preparation workflow is documented in
+[docs/ML_DATA_PIPELINE.md](docs/ML_DATA_PIPELINE.md).
+
 An open-source AI operating system for organizing Mars research, scientific data, simulations, mission knowledge, and autonomous research workflows.
 
 ## Mission
@@ -33,6 +43,13 @@ The classical [Quantum-Inspired Planetary Intelligence Engine](docs/QUANTUM_INSP
 
 The [Predictive Digital Twin Engine](docs/PREDICTIVE_DIGITAL_TWIN.md) is the canonical information-only rover state for future subsystems. It provides immutable snapshots, deterministic diffs, replay, event publication, and bounded assumption-explicit prediction.
 
+The [Mars Physics and Environment Engine](docs/MARS_PHYSICS_ENGINE.md) provides deterministic,
+backend-neutral candidate predictions for simulation review. Its lightweight models are not calibrated
+for hardware and expose no actuation interface.
+
+The [Knowledge Provenance Model](docs/KNOWLEDGE_PROVENANCE.md) defines immutable, deterministic records
+for research sources, ingested documents, and precisely located evidence.
+
 ## Quick Start
 
 The base runtime requires Python 3.11 or newer.
@@ -40,8 +57,17 @@ The base runtime requires Python 3.11 or newer.
 ```bash
 python -m pip install -e ".[dev]"
 mars-ai-os health
+mars-ai-os physics-demo
+mars-ai-os navigation-demo
 python -m pytest
 ```
+
+The interactive Mars Knowledge Console lives in `apps/dashboard`. It provides local evidence search,
+numbered source trails, and session-only ingestion for pasted research material.
+
+The same application includes a deterministic Mission Control Simulator MVP with selectable science
+targets, route candidates, rover telemetry, safety controls, and a replayable event timeline. It is an
+information-only demonstration and is not calibrated or authorized for hardware control.
 
 Development is pull-request based. See [CONTRIBUTING.md](CONTRIBUTING.md) before making changes.
 

@@ -1,17 +1,4 @@
-"""Baseline retrieval-quality evaluation for the knowledge engine.
-
-Implements the roadmap's Phase 1 milestone: "Add evaluation questions
-and baseline quality metrics." This measures *retrieval* quality
-against a labeled set of (question -> expected source document) pairs,
-not free-form answer fluency — retrieval is what determines which
-evidence an ``Answerer`` can possibly cite, so it is the metric that
-actually tracks "evidence before confidence" (docs/PROJECT_CHARTER.md).
-
-This is a starting baseline, not a finished benchmark. See "Limitations"
-in docs/KNOWLEDGE_ENGINE.md: it only covers the bundled sample corpus,
-and a labeled set this small mainly catches regressions, not absolute
-quality.
-"""
+"""Baseline retrieval-quality evaluation for the primary knowledge engine."""
 
 from __future__ import annotations
 
@@ -22,8 +9,6 @@ from mars_ai_os.knowledge.service import KnowledgeService
 
 @dataclass(frozen=True, slots=True)
 class EvaluationCase:
-    """A labeled question paired with the document(s) that should answer it."""
-
     question: str
     expected_document_ids: tuple[str, ...]
     notes: str = ""
@@ -37,8 +22,6 @@ class EvaluationCase:
 
 @dataclass(frozen=True, slots=True)
 class EvaluationOutcome:
-    """What was actually retrieved for one evaluation case."""
-
     case: EvaluationCase
     retrieved_document_ids: tuple[str, ...]
     top_score: float
@@ -66,8 +49,6 @@ class EvaluationOutcome:
 
 @dataclass(frozen=True, slots=True)
 class EvaluationReport:
-    """Aggregate metrics over a full evaluation run."""
-
     outcomes: tuple[EvaluationOutcome, ...]
 
     def __post_init__(self) -> None:
@@ -91,12 +72,6 @@ class EvaluationReport:
         return sum(outcome.reciprocal_rank for outcome in self.outcomes) / self.case_count
 
     def failing_cases(self) -> tuple[EvaluationOutcome, ...]:
-        """Cases where the top retrieved document was not the expected one.
-
-        Use this list to decide the next concrete fix: swap in a better
-        embedder, add more chunks for that topic, or fix a mislabeled case.
-        """
-
         return tuple(outcome for outcome in self.outcomes if not outcome.hit_at_1)
 
     def to_dict(self) -> dict[str, object]:
@@ -112,23 +87,16 @@ class EvaluationReport:
 def run_evaluation(
     service: KnowledgeService, cases: tuple[EvaluationCase, ...], *, top_k: int = 3
 ) -> EvaluationReport:
-    """Run every case's question through retrieval and score the results.
-
-    ``service`` must already be started (documents ingested).
-    """
-
     if not cases:
         raise ValueError("cases cannot be empty")
-
     outcomes = []
     for case in cases:
         passages = service.retrieve(case.question, top_k=top_k)
-        retrieved_document_ids = tuple(passage.chunk.document_id for passage in passages)
-        top_score = passages[0].score if passages else 0.0
         outcomes.append(
             EvaluationOutcome(
-                case=case, retrieved_document_ids=retrieved_document_ids, top_score=top_score
+                case=case,
+                retrieved_document_ids=tuple(item.chunk.document_id for item in passages),
+                top_score=passages[0].score if passages else 0.0,
             )
         )
-
     return EvaluationReport(outcomes=tuple(outcomes))

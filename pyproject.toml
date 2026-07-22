@@ -9,7 +9,9 @@ description = "A trustworthy, modular AI operating system for Mars research."
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [{ name = "Mars Research AI OS contributors" }]
-dependencies = []
+dependencies = [
+  "pypdf>=5.0,<7",
+]
 
 [project.optional-dependencies]
 dev = [
@@ -19,6 +21,8 @@ dev = [
 
 [project.scripts]
 mars-ai-os = "mars_ai_os.cli:main"
+areograph-mission-api = "mars_ai_os.mission.api:serve"
+areograph-data-pipeline = "mars_ai_os.ml_pipeline.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/mars_ai_os"]
